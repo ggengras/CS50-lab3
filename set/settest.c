@@ -2,6 +2,10 @@
 #include <stdbool.h>
 #include "set.h"
 
+// Item print functions
+
+// Item delete functions
+
 int main(void) {
     // Make a new set
     set_t *set;
@@ -13,6 +17,17 @@ int main(void) {
     int value = 5;
     assert(set_insert(set, key, &value) == true);
 
-    printf("Set Tests Complete\n");
+    // Attempt to add NULLs
+    char *keytwo = NULL;
+    int *valuetwo = NULL;
+    assert(set_insert(set, keytwo, valuetwo) == false);
+
+    // Test finding item with key
+
+    // Test printing
+
+    // Test deletion
+
+    printf("Set Tests Successful\n");
     return 0;
 }

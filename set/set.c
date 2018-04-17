@@ -25,14 +25,14 @@ typedef struct set {
 
 /**************** local functions **************/
 static setpair_t *setpair_new(char *key, void *item) {
-    setpair_t *setpair = malloc(sizeof(setpair_t));
+    setpair_t *pair = malloc(sizeof(setpair_t));
 
-    if (setpair == NULL) {
+    if (pair == NULL) {
         return NULL; // Memory not properly allocated
     } else {
-        setpair->key = key;
-        setpair->item = item;
-        return setpair;
+        pair->key = key;
+        pair->item = item;
+        return pair;
     }
 }
 
@@ -63,27 +63,58 @@ bool set_insert(set_t *set, const char *key, void *item) {
             set->head = new;
             return true;
         }
-    } else {
-        // Returns false if set, key, or item is NULL
-        // or if key already exists
-        return false;
     }
+    return false;
 }
 
 void *set_find(set_t *set, const char *key) {
-
+    if (set != NULL && key != NULL) {
+        for(setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
+            if (strcmp(key, pair->key) == 0) {
+                return pair->item;
+            }
+        }
+    }
+    return NULL;
 }
 
 void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key, void *item) ) {
-
-
+    if (fp != NULL) {
+        if (set != NULL) {
+            fputc('{', fp);
+            for (setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
+                // Print current node (key, item)
+                if (itemprint != NULL) {
+                    (*itemprint)(fp, pair->key, pair->item);
+                    fputc(',', fp);
+                }
+            }
+            fputc('}', fp);
+        } else {
+            fputs("(NULL)", fp);
+        }
+    }
 }
 
-
 void set_iterate(set_t *set, void *arg, void (*itemfunc)(void *arg, const char *key, void *item) ) {
-
+    if (set != NULL && itemfunc != NULL) {
+        // Call itemfunc with arg on each item
+        for (setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
+            (*itemfunc)(arg, pair->key, pair->item);
+        }
+    }
 }
 
 void set_delete(set_t *set, void (*itemdelete)(void *item)) {
-
+    if (set != NULL) {
+        for (setpair_t *pair = set->head; pair != NULL;) {
+            if (itemdelete != NULL) {
+                (*itemdelete)(pair->item);
+            }
+            setpair_t *next = pair->next; // Store next pair
+            free(pair);
+            pair = next;
+        }
+        free(set);
+    }
 }

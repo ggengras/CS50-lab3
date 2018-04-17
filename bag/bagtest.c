@@ -3,7 +3,7 @@
  *
  * usage:
  *   read stock quotes from stdin to use as test data.
- * each line should be comma-separated values, with 
+ * each line should be comma-separated values, with
  *  "symbol",close,price,volume
  * where close and price are floats and volume is an int.
  * for example, pipe the output of curl into this program:
@@ -13,7 +13,7 @@
  *  http://www.marketindex.com.au/yahoo-finance-api
  *
  * David Kotz, April 2016, 2017
- * 
+ *
  * Updated by Rui Liu, Xia Zhou, July 2016
  */
 
@@ -43,7 +43,7 @@ static void stockdelete(void *item);
 static int stockcount = 0;
 
 /* **************************************** */
-int main() 
+int main()
 {
   bag_t *bag;		      // the bag
   char *line;		      // a line of input
@@ -99,7 +99,7 @@ int main()
 /* print the given item to the given file;
  * just print the stock symbol
  */
-static void 
+static void
 simpleprint(void *arg, void *item)
 {
   FILE *fp = arg;
@@ -112,7 +112,7 @@ simpleprint(void *arg, void *item)
 /* count the non-null items in the bag.
  * note here we don't care what kind of item is in bag.
  */
-static void 
+static void
 itemcount(void *arg, void *item)
 {
   int *nitems = arg;
@@ -123,7 +123,7 @@ itemcount(void *arg, void *item)
 
 /* count the number of gainers and losers.
  */
-static void 
+static void
 stockgainloss(void *arg, void *item)
 {
   struct gainloss *gl = arg;
@@ -141,18 +141,18 @@ stockgainloss(void *arg, void *item)
 /* print the given item to the given file;
  * print the stock symbol, close, price, and volume..
  */
-static void 
+static void
 stockprint(FILE *fp, void *item)
 {
   struct stock *stp = item;
   if (stp == NULL)
     fprintf(fp, "[(null)]");
-  else 
-    fprintf(fp, "[%s: close %f, price %f, vol %d]", 
+  else
+    fprintf(fp, "[%s: close %f, price %f, vol %d]",
 	    stp->symbol, stp->close, stp->price, stp->volume);
 }
 
-static void 
+static void
 stockdelete(void *item)
 {
   if (item) {
@@ -160,4 +160,3 @@ stockdelete(void *item)
     stockcount--;
   }
 }
-
