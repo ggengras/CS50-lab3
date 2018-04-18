@@ -6,22 +6,22 @@
 # Compiler and flags
 CC=gcc
 CFLAGS=-Wall -pedantic -std=c11 -ggdb
-OBJS=
-LIBS=
+PROG = set
+TEST= $(PROG)test
+OBJS= $(PROG).o
 
 .PHONY: test clean
 
-all: set.o
+all: $(PROG).o
 
 # Target dependencies
-set.o:
-	$(CC) $(CFLAGS) -c set.c
+set.o: $(PROG).h
 
-test:
-	$(CC) $(CFLAGS) settest.c set.c -o settest
-	./settest
+test: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST).c -o $(TEST)
+	./$(TEST)
 
 clean:
 	rm -f *~ *.o
 	rm -rf *.dSYM
-	rm -f settest
+	rm -f $(TEST)

@@ -1,8 +1,8 @@
 /*
 * set.c   Graeme Gengras, April 2018
 *
-*
-*
+* CS50 'set' module
+* see set.h for more information
 */
 
 #include <stdlib.h>
@@ -12,7 +12,7 @@
 #include "set.h"
 
 /**************** local types ******************/
-typedef struct setpair {
+typedef struct setpair { // Using static throws an error
     char *key;
     void *item;
     struct setpair *next;
@@ -92,7 +92,7 @@ void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key
                 if (itemprint != NULL) {
                     (*itemprint)(fp, pair->key, pair->item);
 
-                    // Fix comma at end of list
+                    // Fixes comma at end of list
                     if (pair->next != NULL) {
                         fputc(',', fp);
                     }
@@ -125,7 +125,7 @@ void set_delete(set_t *set, void (*itemdelete)(void *item))
             setpair_t *next = pair->next; // Store next pair
             free(pair->key);
             free(pair);
-            pair = next;
+            pair = next; // Iterate
         }
         free(set);
     }

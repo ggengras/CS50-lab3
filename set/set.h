@@ -1,8 +1,10 @@
 /*
 * set.h   Graeme Gengras, April 2018
 *
-*
-*
+* A set is an unordered collection of (key, item) pairs. Any given key can only
+* occur once in the set.  The set starts empty.  The caller can retrieve items by
+* asking for their key, but cannot remove or update pairs.  Items are distinguished
+* by their keys.  Items can be any type, keys must be char*.
 */
 
 
