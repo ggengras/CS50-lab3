@@ -6,22 +6,23 @@
 # Compiler and flags
 CC=gcc
 CFLAGS=-Wall -pedantic -std=c11 -ggdb
-OBJS=
-LIBS=
+PROG = hashtable
+TEST= $(PROG)test
+OBJS= hashtable.o jhash.o
 
 .PHONY: test clean
 
-all: hashtable.o
+all: hashtable.o jhash.o
 
 # Target dependencies
-hashtable.o:
-	$(CC) $(CFLAGS) -c hashtable.c ../set/set.c
+hashtable.o: hashtable.h ../set/set.h
+jhash.o: jhash.h
 
-test:
-	$(CC) $(CFLAGS) hashtabletest.c hashtable.c -o hashtabletest
-	./hashtabletest
+test: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST).c ../set/set.c -o $(TEST)
+	./$(TEST)
 
 clean:
 	rm -f *~ *.o
 	rm -rf *.dSYM
-	rm -f hashtabletest
+	rm -f $(TEST)

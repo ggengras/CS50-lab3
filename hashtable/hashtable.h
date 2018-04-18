@@ -1,7 +1,7 @@
 /*
 * hashtable.h   Graeme Gengras, April 2018
 *
-*
+* A hashtable is a set of (key,item) pairs.  It is built
 *
 *
 *
@@ -9,6 +9,8 @@
 
 #ifndef __HASHTABLE_H
 #define __HASHTABLE_H
+
+#include <stdio.h>
 
 /**************** global types ****************/
 typedef struct hashtable hashtable_t;

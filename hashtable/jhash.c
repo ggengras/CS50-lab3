@@ -1,11 +1,11 @@
 /* =========================================================================
  * jhash.c - Jenkins' Hash, maps from string to integer
  *
- * ========================================================================= 
+ * =========================================================================
  */
 
 #include <string.h>
-#include "jhash.h" 
+#include "jhash.h"
 
 // JenkinsHash - see header file for usage
 unsigned long
