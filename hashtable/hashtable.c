@@ -72,15 +72,42 @@ void *hashtable_find(hashtable_t *ht, const char *key)
 
 void hashtable_print(hashtable_t *ht, FILE *fp, void (*itemprint)(FILE *fp, const char *key, void *item))
 {
-
+    if (fp != NULL) {
+        if (ht != NULL) {
+            // Iterate over slots
+            for (int i = 0; i < ht->num_slots; i++) {
+                // Print each set
+                fprintf(fp, "Slot %d:", i);
+                set_print(ht->slots[i], fp, (*itemprint));
+                fputs("\n", fp);
+            }
+        } else {
+            fputs("(NULL)", fp);
+        }
+    }
 }
 
 void hashtable_iterate(hashtable_t *ht, void *arg, void (*itemfunc)(void *arg, const char *key, void *item))
 {
-
+    if (ht != NULL && itemfunc != NULL) {
+        // Iterate over slots
+        for (int i = 0; i < ht->num_slots; i++) {
+            // Iterate over set in slot
+            set_iterate(ht->slots[i], arg, (*itemfunc));
+        }
+    }
 }
 
 void hashtable_delete(hashtable_t *ht, void (*itemdelete)(void *item))
 {
-
+    if (ht != NULL) {
+        // Iterate over slots
+        for (int i = 0; i < ht->num_slots; i++) {
+            // Free the sets
+            set_delete(ht->slots[i], (*itemdelete));
+        }
+        // Free memory sets were kept in
+        free(ht->slots);
+        free(ht);
+    }
 }
