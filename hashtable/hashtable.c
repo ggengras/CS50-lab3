@@ -30,6 +30,11 @@ hashtable_t *hashtable_new(const int num_slots)
         hashtable->slots = calloc(num_slots, sizeof(set_t*));
         hashtable->num_slots = num_slots;
 
+        // Create an empty set in each slot
+        for (int i = 0; i < num_slots; i++) {
+            hashtable->slots[i] = set_new();
+        }
+
         // Make sure memory was properly allocated
         if (hashtable == NULL || hashtable->slots == NULL) {
             return NULL;
