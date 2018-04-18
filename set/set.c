@@ -13,8 +13,8 @@
 
 /**************** local types ******************/
 typedef struct setpair {
-    void *item;
     char *key;
+    void *item;
     struct setpair *next;
 } setpair_t;
 
@@ -36,7 +36,7 @@ static setpair_t *setpair_new(char *key, void *item) {
     }
 }
 
-/**************** something **************/
+/**************** global functions **************/
 set_t *set_new(void) {
     set_t *set = malloc(sizeof(set_t));
 
@@ -86,7 +86,11 @@ void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key
                 // Print current node (key, item)
                 if (itemprint != NULL) {
                     (*itemprint)(fp, pair->key, pair->item);
-                    fputc(',', fp);
+
+                    // Fix comma at end of list
+                    if (pair->next != NULL) {
+                        fputc(',', fp);
+                    }
                 }
             }
             fputc('}', fp);
@@ -112,6 +116,7 @@ void set_delete(set_t *set, void (*itemdelete)(void *item)) {
                 (*itemdelete)(pair->item);
             }
             setpair_t *next = pair->next; // Store next pair
+            free(pair->key);
             free(pair);
             pair = next;
         }
