@@ -6,22 +6,22 @@
 # Compiler and flags
 CC=gcc
 CFLAGS=-Wall -pedantic -std=c11 -ggdb
-OBJS=
-LIBS=
+PROG = counters
+TEST= $(PROG)test
+OBJS= $(PROG).o
 
 .PHONY: test clean
 
-all: counter.o
+all: $(PROG).o
 
 # Target dependencies
-counter.o:
-	$(CC) $(CFLAGS) -c counters.c
+counter.o: $(PROG).h
 
-test:
-	$(CC) $(CFLAGS) counterstest.c counters.c -o counterstest
-	./counterstest
+test: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST).c -o $(TEST)
+	./$(TEST)
 
 clean:
 	rm -f *~ *.o
 	rm -rf *.dSYM
-	rm -f counterstest
+	rm -f $(TEST)
