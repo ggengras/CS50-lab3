@@ -10,6 +10,9 @@
 #ifndef __COUNTERS_H
 #define __COUNTERS_H
 
+/**************** global types ****************/
+typedef struct counters counters_t;
+
 /**************** functions ****************/
 
 /* Create a new (empty) counter structure; return NULL if error. */

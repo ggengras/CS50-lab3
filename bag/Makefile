@@ -33,4 +33,3 @@ clean:
 	rm -f *~ *.o *.dSYM
 	rm -f $(PROG)
 	rm -f stocks
-	rm bagtest.out

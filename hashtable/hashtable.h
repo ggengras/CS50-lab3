@@ -1,5 +1,5 @@
 /*
-* counters.h   Graeme Gengras, April 2018
+* hashtable.h   Graeme Gengras, April 2018
 *
 *
 *
@@ -9,6 +9,9 @@
 
 #ifndef __HASHTABLE_H
 #define __HASHTABLE_H
+
+/**************** global types ****************/
+typedef struct hashtable hashtable_t;
 
 /**************** functions ****************/
 

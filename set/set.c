@@ -24,7 +24,8 @@ typedef struct set {
 } set_t;
 
 /**************** local functions **************/
-static setpair_t *setpair_new(char *key, void *item) {
+static setpair_t *setpair_new(char *key, void *item)
+{
     setpair_t *pair = malloc(sizeof(setpair_t));
 
     if (pair == NULL) {
@@ -37,7 +38,8 @@ static setpair_t *setpair_new(char *key, void *item) {
 }
 
 /**************** global functions **************/
-set_t *set_new(void) {
+set_t *set_new(void)
+{
     set_t *set = malloc(sizeof(set_t));
 
     if (set == NULL) {
@@ -48,7 +50,8 @@ set_t *set_new(void) {
     }
 }
 
-bool set_insert(set_t *set, const char *key, void *item) {
+bool set_insert(set_t *set, const char *key, void *item)
+{
     if (set != NULL && item != NULL && key != NULL) {
         // Need to copy key to not discard const qualifier
         char *keycpy = malloc(strlen(key) + 1);
@@ -67,7 +70,8 @@ bool set_insert(set_t *set, const char *key, void *item) {
     return false;
 }
 
-void *set_find(set_t *set, const char *key) {
+void *set_find(set_t *set, const char *key)
+{
     if (set != NULL && key != NULL) {
         for(setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
             if (strcmp(key, pair->key) == 0) {
@@ -78,7 +82,8 @@ void *set_find(set_t *set, const char *key) {
     return NULL;
 }
 
-void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key, void *item) ) {
+void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key, void *item) )
+{
     if (fp != NULL) {
         if (set != NULL) {
             fputc('{', fp);
@@ -100,7 +105,8 @@ void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key
     }
 }
 
-void set_iterate(set_t *set, void *arg, void (*itemfunc)(void *arg, const char *key, void *item) ) {
+void set_iterate(set_t *set, void *arg, void (*itemfunc)(void *arg, const char *key, void *item) )
+{
     if (set != NULL && itemfunc != NULL) {
         // Call itemfunc with arg on each item
         for (setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
@@ -109,7 +115,8 @@ void set_iterate(set_t *set, void *arg, void (*itemfunc)(void *arg, const char *
     }
 }
 
-void set_delete(set_t *set, void (*itemdelete)(void *item)) {
+void set_delete(set_t *set, void (*itemdelete)(void *item))
+{
     if (set != NULL) {
         for (setpair_t *pair = set->head; pair != NULL;) {
             if (itemdelete != NULL) {
