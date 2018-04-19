@@ -87,6 +87,7 @@ void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key
     if (fp != NULL) {
         if (set != NULL) {
             fputc('{', fp);
+            // Iterate over set
             for (setpair_t *pair = set->head; pair != NULL; pair = pair->next) {
                 // Print current node (key, item)
                 if (itemprint != NULL) {
@@ -99,8 +100,9 @@ void set_print(set_t *set, FILE *fp, void (*itemprint)(FILE *fp, const char *key
                 }
             }
             fputc('}', fp);
+            fputs("\n", fp);
         } else {
-            fputs("(NULL)", fp);
+            fputs("(NULL)\n", fp);
         }
     }
 }

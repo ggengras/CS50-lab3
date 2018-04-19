@@ -1,10 +1,9 @@
 /*
 * settest.c  Graeme Gengras, April 2018
 *
-*
-*
-*
-*
+* Simple testing file for the set module.  See function
+* details in set.h.  Each function is tested
+* with normal and NULL parameters
 */
 
 #include <assert.h>
@@ -12,18 +11,19 @@
 #include <stdlib.h>
 #include "set.h"
 
-// Item print functions
+// Item print function
 void printint(FILE *fp, const char *key, void *item) {
     int *valuep = item;
     fprintf(fp, "%s:%d", key, *valuep);
 }
 
-// Item delete functions
-void intdelete(void *item) {
-    int *valued = item;
-    free(&valued);
+// Iterate function
+void iterateprint(void *arg, const char *key, void *item) {
+    int *valuep = item;
+    printf("%s:%d", key, *valuep);
 }
 
+// Tests
 int main(void) {
     // Make a new set
     set_t *set;
@@ -41,14 +41,27 @@ int main(void) {
     assert(set_insert(set, keytwo, valuetwo) == false);
 
     // Test finding item with key
+    int *foundvalue = set_find(set, key);
+    assert(*foundvalue == 5);
+
+    // Test finding NULL key
+    assert(set_find(set, NULL) == NULL);
 
     // Test printing
-    printf("Test printing\n");
+    printf("Testing set printing\n");
     set_print(set, stdout, printint);
 
+    // Test printing NULL set
+    set_print(NULL, stdout, NULL);
+
+    // Test iteration with print function (should do the same thing)
+    printf("Testing set iteration\n");
+    set_iterate(set, stdout, iterateprint);
+
     // Test deletion
-    set_delete(set, intdelete);
-    free(set);
+    set_delete(set, NULL);
+    // Check for memory leaks to make sure this was successful
+
     printf("\nSet Tests Successful\n");
     return 0;
 }
