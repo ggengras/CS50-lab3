@@ -24,7 +24,7 @@ typedef struct counters {
 /**************** local functions **************/
 static counter_t *counter_new(int key)
 {
-    counter_t *counter = malloc(sizeof(counter));
+    counter_t *counter = malloc(sizeof(counter_t));
 
     if (counter == NULL) {
         return NULL; // Error allocating memory
@@ -121,7 +121,7 @@ void counters_print(counters_t *ctrs, FILE *fp)
             fputc('}', fp);
             fputs("\n", fp);
         } else {
-            fputs("(NULL)", fp);
+            fputs("(NULL)\n", fp);
         }
     }
 }
