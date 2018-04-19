@@ -1,18 +1,16 @@
 /*
 * counters.c   Graeme Gengras, April 2018
 *
-*
-*
+* CS50 'counters' module
+* see counters.h for more information
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include "counters.h"
 
 /**************** local types ******************/
-typedef struct counter {
+typedef struct counter { // Using static throws an error
     int key;
     int count;
     struct counter *next;
@@ -34,6 +32,7 @@ static counter_t *counter_new(int key)
         // Initialize contents
         counter->key = key;
         counter->count = 0;
+        return counter;
     }
 }
 
@@ -95,8 +94,12 @@ void counters_set(counters_t *ctrs, const int key, int count)
 
             if (counter->key == key) {
                 counter->count = count;
+                return;
             }
-         }
+        }
+        // If function doesn't return, key wasn't found and we to make a new counter
+        counters_add(ctrs, key);
+        counters_set(ctrs, key, count);
     }
 }
 
@@ -110,12 +113,13 @@ void counters_print(counters_t *ctrs, FILE *fp)
                 // Print node
                 fprintf(fp, "%d:%d", counter->key, counter->count);
 
-                // Fix comma at end of list
+                // Fixes comma at end of list
                 if (counter->next != NULL) {
                     fputc(',', fp);
                 }
             }
             fputc('}', fp);
+            fputs("\n", fp);
         } else {
             fputs("(NULL)", fp);
         }
@@ -136,5 +140,12 @@ void counters_iterate(counters_t *ctrs, void *arg,
 
 void counters_delete(counters_t *ctrs)
 {
-
+    if (ctrs != NULL) {
+        for (counter_t *counter = ctrs->head; counter != NULL;) {
+            counter_t *next = counter->next;
+            free(counter);
+            counter = next; // Iterate
+        }
+        free(ctrs);
+    }
 }

@@ -1,14 +1,16 @@
 /*
 * counters.h   Graeme Gengras, April 2018
 *
-*
-*
-*
-*
+* A 'counter set' is a set of counters, each distinguished by an integer key.
+* Each key can only occur once in the set, and when an existing key is added
+* to the set it increments the counter associated with that key.
+* The current counter value can be retrieved by asking for the relevant key.
 */
 
 #ifndef __COUNTERS_H
 #define __COUNTERS_H
+
+#include <stdio.h>
 
 /**************** global types ****************/
 typedef struct counters counters_t;
