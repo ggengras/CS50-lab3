@@ -67,5 +67,6 @@ int main(void) {
     counters_delete(counterset);
     // Check for memory leaks to make sure this was successful
 
+    printf("Counters Tests Successful\n");
     return 0;
 }
