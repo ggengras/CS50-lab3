@@ -1,10 +1,12 @@
 /*
 * hashtable.c  Graeme Gengras, April 2018
 *
-*
-*
-*
-*
+* A `hashtable` is an array of slots, the size of which
+* is determined by the modulus of the hashing function.
+* It stores (`key`:`item`) pairs just like a `set`,
+* but has a much faster lookup time because the hashing function
+* maps each key to a known slot in the list.  Hashing is done using
+* the Jenkins Hashing function - see `jhash.[ch]` for more details.
 */
 
 #include <stdlib.h>
@@ -79,10 +81,10 @@ void hashtable_print(hashtable_t *ht, FILE *fp, void (*itemprint)(FILE *fp, cons
                 // Print each set
                 fprintf(fp, "Slot %d:", i);
                 set_print(ht->slots[i], fp, (*itemprint));
-                fputs("\n", fp);
+
             }
         } else {
-            fputs("(NULL)", fp);
+            fputs("(NULL)\n", fp);
         }
     }
 }

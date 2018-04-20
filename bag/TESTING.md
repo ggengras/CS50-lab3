@@ -29,4 +29,3 @@ In that file one can see the progress of building a bag, the results of `bag_pri
 
 I never tested `bag_extract`!
 I really should write another loop, or another test program, to test the extraction of some items from the bag.
-

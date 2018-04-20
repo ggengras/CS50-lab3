@@ -23,13 +23,13 @@ void bag_insert(bag_t *bag, void *item);
 void *bag_extract(bag_t *bag);
 
 /* Print the whole bag; provide the output file and func to print each item.
- * If fp==NULL; do nothing. If bag==NULL, print (null). 
+ * If fp==NULL; do nothing. If bag==NULL, print (null).
  * If itemprint==NULL, print nothing for each item.
  */
-void bag_print(bag_t *bag, FILE *fp, 
+void bag_print(bag_t *bag, FILE *fp,
 	       void (*itemprint)(FILE *fp, void *item));
 
-/* Iterate over the whole bag; call the given function on each item, 
+/* Iterate over the whole bag; call the given function on each item,
  * passing both the item and an argument. Ignore if NULL bag or NULL itemfunc.
  */
 void bag_iterate(bag_t *bag, void *arg,
